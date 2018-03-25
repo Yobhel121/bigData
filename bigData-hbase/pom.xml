@@ -27,7 +27,12 @@
 			<artifactId>hbase-client</artifactId>
 			<version>0.98.6-hadoop2</version>
 		</dependency>
-		 
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-server</artifactId>
+			<version>0.98.6-hadoop2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>jdk.tools</groupId>
 			<artifactId>jdk.tools</artifactId>
