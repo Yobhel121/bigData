@@ -54,9 +54,9 @@ public class HBaseTableDemo {
 	 * @author gerry
 	 *
 	 */
-	static class DemoMapper extends TableMapper<Text, ProductModel> {
+	static class DemoMapper extends TableMapper<Text, com.alonzo.hbase.ProductModel> {
 		private Text outputKey = new Text();
-		private ProductModel outputValue = new ProductModel();
+		private com.alonzo.hbase.ProductModel outputValue = new com.alonzo.hbase.ProductModel();
 
 		@Override
 		protected void map(ImmutableBytesWritable key, Result value, Context context)
@@ -132,11 +132,11 @@ public class HBaseTableDemo {
 	 * @author gerry
 	 *
 	 */
-	static class DemoReducer extends TableReducer<Text, ProductModel, ImmutableBytesWritable> {
+	static class DemoReducer extends TableReducer<Text, com.alonzo.hbase.ProductModel, ImmutableBytesWritable> {
 		@Override
-		protected void reduce(Text key, Iterable<ProductModel> values, Context context)
+		protected void reduce(Text key, Iterable<com.alonzo.hbase.ProductModel> values, Context context)
 				throws IOException, InterruptedException {
-			for (ProductModel value : values) {
+			for (com.alonzo.hbase.ProductModel value : values) {
 				// 我只拿一个，如果有多个产品id的话
 				ImmutableBytesWritable outputKey = new ImmutableBytesWritable(Bytes.toBytes(key.toString()));
 				Put put = new Put(Bytes.toBytes(key.toString()));

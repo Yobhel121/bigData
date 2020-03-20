@@ -1,0 +1,10 @@
+
+hive/.idea/*
+hive/es-core-first.iml
+hive/target/classes/*
+hbase/.idea/*
+hbase/es-senior.iml
+hbase/target/classes/*
+hadoop/.idea/*
+hadoop/es-senior.iml
+hadoop/target/classes/*

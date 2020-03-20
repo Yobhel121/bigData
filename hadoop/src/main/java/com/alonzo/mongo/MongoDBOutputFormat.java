@@ -55,7 +55,7 @@ public class MongoDBOutputFormat<V extends MongoDBWritable> extends OutputFormat
 	@Override
 	public RecordWriter<NullWritable, V> getRecordWriter(TaskAttemptContext context)
 			throws IOException, InterruptedException {
-		return new MongoDBRecordWriter<>(context);
+		return new MongoDBRecordWriter<V>(context);
 	}
 
 	@Override
