@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext
 /**
  * @author Administrator
  */
-object HDFSFile {
+object HDFSFileScala {
   
   def main(args: Array[String]) {
     val conf = new SparkConf()

@@ -10,7 +10,7 @@ import org.apache.spark.sql.SQLContext
  * 不能用def main()方法的方式，来运行程序，否则就会报no typetag for ...class的错误
  * @author Administrator
  */
-object RDD2DataFrameReflection extends App{
+object RDD2DataFrameReflectionScala extends App{
   
   val conf = new SparkConf()
       .setMaster("local")  

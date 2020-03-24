@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext
 /**
  * @author Administrator
  */
-object LocalFile {
+object LocalFileScala {
   
   def main(args: Array[String]) {
     val conf = new SparkConf()

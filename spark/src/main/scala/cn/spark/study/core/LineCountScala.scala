@@ -8,7 +8,7 @@ import org.apache.spark.SparkContext._
 /**
  * @author Administrator
  */
-object LineCount {
+object LineCountScala {
   
   def main(args: Array[String]) {
     val conf = new SparkConf()

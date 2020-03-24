@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext
 /**
  * @author Administrator
  */
-object ActionOperation {
+object ActionOperationScala {
 
   def main(args: Array[String]){
     //reduce()

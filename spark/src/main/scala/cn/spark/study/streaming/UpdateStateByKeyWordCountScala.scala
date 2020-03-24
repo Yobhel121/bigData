@@ -4,7 +4,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.streaming.Seconds
 import org.apache.spark.streaming.StreamingContext
 
-object UpdateStateByKeyWordCount {
+object UpdateStateByKeyWordCountScala {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()

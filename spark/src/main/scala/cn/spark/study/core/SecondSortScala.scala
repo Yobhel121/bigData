@@ -4,7 +4,7 @@ import scala.tools.nsc.doc.model.Val
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 
-object SecondSort {
+object SecondSortScala {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
@@ -14,7 +14,7 @@ object SecondSort {
     
     val lines = sc.textFile("C://Users//Administrator//Desktop//sort.txt", 1)
     val pairs = lines.map { line => (
-        new SecondSortKey(line.split(" ")(0).toInt, line.split(" ")(1).toInt),
+        new SecondSortKeyScala(line.split(" ")(0).toInt, line.split(" ")(1).toInt),
         line)}
     val sortedPairs = pairs.sortByKey()
     val soredLines = sortedPairs.map(sortedPair => sortedPair._2)

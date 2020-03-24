@@ -11,7 +11,7 @@ import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.dstream.DStream.toPairDStreamFunctions
 import org.apache.spark.sql.hive.HiveContext
 
-object Top3HotProduct {
+object Top3HotProductScala {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()

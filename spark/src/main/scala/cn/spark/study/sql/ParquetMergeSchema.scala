@@ -20,13 +20,16 @@ object ParquetMergeSchema {
     
     // 创建一个DataFrame，作为学生的基本信息，并写入一个parquet文件中
     val studentsWithNameAge = Array(("leo", 23), ("jack", 25)).toSeq
-    val studentsWithNameAgeDF = sc.parallelize(studentsWithNameAge, 2).toDF("name", "age")  
-    studentsWithNameAgeDF.save("hdfs://spark1:9000/spark-study/students", "parquet", SaveMode.Append)
-    
+    val studentsWithNameAgeDF = sc.parallelize(studentsWithNameAge, 2).toDF("name", "age")
+    studentsWithNameAgeDF.write.save("hdfs://spark1:9000/spark-study/students")
+//    studentsWithNameAgeDF.save("hdfs://spark1:9000/spark-study/students", "parquet", SaveMode.Append)
+    studentsWithNameAgeDF.write.mode(SaveMode.Append).save("hdfs://spark1:9000/spark-study/students")
+
     // 创建第二个DataFrame，作为学生的成绩信息，并写入一个parquet文件中
     val studentsWithNameGrade = Array(("marry", "A"), ("tom", "B")).toSeq    
-    val studentsWithNameGradeDF = sc.parallelize(studentsWithNameGrade, 2).toDF("name", "grade")  
-    studentsWithNameGradeDF.save("hdfs://spark1:9000/spark-study/students", "parquet", SaveMode.Append)
+    val studentsWithNameGradeDF = sc.parallelize(studentsWithNameGrade, 2).toDF("name", "grade")
+    studentsWithNameGradeDF.write.mode(SaveMode.Append).save("hdfs://spark1:9000/spark-study/students")
+//    studentsWithNameGradeDF.save("hdfs://spark1:9000/spark-study/students", "parquet", SaveMode.Append)
   
     // 首先，第一个DataFrame和第二个DataFrame的元数据肯定是不一样的吧
     // 一个是包含了name和age两个列，一个是包含了name和grade两个列

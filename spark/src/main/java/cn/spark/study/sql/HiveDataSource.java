@@ -7,6 +7,8 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.hive.HiveContext;
 
+import java.util.List;
+
 /**
  * Hive数据源
  * @author Administrator
@@ -59,7 +61,8 @@ public class HiveDataSource {
 		// 第四个功能，可以用table()方法，针对hive表，直接创建DataFrame
 		
 		// 然后针对good_student_infos表，直接创建DataFrame
-		Row[] goodStudentRows = hiveContext.table("good_student_infos").collect();  
+		List<Row> goodStudentRows = hiveContext.table("good_student_infos").javaRDD().collect();
+//		Row[] goodStudentRows = hiveContext.table("good_student_infos").collect();
 		for(Row goodStudentRow : goodStudentRows) {
 			System.out.println(goodStudentRow);  
 		}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.Optional;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.streaming.Durations;
@@ -16,7 +17,6 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import scala.Tuple2;
 
-import com.google.common.base.Optional;
 
 /**
  * 基于transform的实时广告计费日志黑名单过滤
@@ -39,8 +39,8 @@ public class TransformBlacklist {
 		
 		// 先做一份模拟的黑名单RDD
 		List<Tuple2<String, Boolean>> blacklist = new ArrayList<Tuple2<String, Boolean>>();
-		blacklist.add(new Tuple2<String, Boolean>("tom", true));  
-		final JavaPairRDD<String, Boolean> blacklistRDD = jssc.sc().parallelizePairs(blacklist);
+		blacklist.add(new Tuple2<String, Boolean>("tom", true));
+		final JavaPairRDD<String, Boolean> blacklistRDD = jssc.sparkContext().parallelizePairs(blacklist);
 		
 		// 这里的日志格式，就简化一下，就是date username的方式
 		JavaReceiverInputDStream<String> adsClickLogDStream = jssc.socketTextStream("spark1", 9999);

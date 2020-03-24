@@ -2,9 +2,10 @@ package cn.spark.study.sql
 
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
+import org.apache.spark.sql.SaveMode
 import org.apache.spark.sql.hive.HiveContext
 
-object HiveDataSource {
+object HiveDataSourceScala {
   
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
@@ -29,9 +30,9 @@ object HiveDataSource {
         + "JOIN student_scores ss ON si.name=ss.name "
         + "WHERE ss.score>=80");
     
-    hiveContext.sql("DROP TABLE IF EXISTS good_student_infos");  
-    goodStudentsDF.saveAsTable("good_student_infos");  
-    
+    hiveContext.sql("DROP TABLE IF EXISTS good_student_infos");
+    goodStudentsDF.write.format("hive").mode(SaveMode.Append).saveAsTable("good_student_infos")
+
     val goodStudentRows = hiveContext.table("good_student_infos").collect();  
     for(goodStudentRow <- goodStudentRows) {
       println(goodStudentRow);  

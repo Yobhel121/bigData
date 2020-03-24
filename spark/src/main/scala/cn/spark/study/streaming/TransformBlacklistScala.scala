@@ -4,7 +4,7 @@ import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.Seconds
 
-object TransformBlacklist {
+object TransformBlacklistScala {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()

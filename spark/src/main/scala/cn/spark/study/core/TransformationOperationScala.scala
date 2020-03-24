@@ -11,7 +11,7 @@ import org.apache.spark.SparkConf
 /**
  * @author Administrator
  */
-object TransformationOperation {
+object TransformationOperationScala {
   
   def main(args: Array[String]){
     //map()

@@ -9,6 +9,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
@@ -91,63 +92,62 @@ public class Top3HotProduct {
 
 		// 然后针对60秒内的每个种类的每个商品的点击次数
 		// foreachRDD，在内部，使用Spark SQL执行top3热门商品的统计
-		categoryProductCountsDStream.foreachRDD(new Function<JavaPairRDD<String, Integer>, Void>() {
+        categoryProductCountsDStream.foreachRDD(new VoidFunction<JavaPairRDD<String, Integer>>() {
+            @Override
+            public void call(JavaPairRDD<String, Integer> categoryProductCountsRDD) throws Exception {
+                // 将该RDD，转换为JavaRDD<Row>的格式
+                JavaRDD<Row> categoryProductCountRowRDD = categoryProductCountsRDD.map(
 
-			@Override
-			public Void call(JavaPairRDD<String, Integer> categoryProductCountsRDD) throws Exception {
-				// 将该RDD，转换为JavaRDD<Row>的格式
-				JavaRDD<Row> categoryProductCountRowRDD = categoryProductCountsRDD.map(
+                        new Function<Tuple2<String,Integer>, Row>() {
 
-						new Function<Tuple2<String,Integer>, Row>() {
+                            private static final long serialVersionUID = 1L;
 
-							private static final long serialVersionUID = 1L;
+                            @Override
+                            public Row call(Tuple2<String, Integer> categoryProductCount)
+                                    throws Exception {
+                                String category = categoryProductCount._1.split("_")[0];
+                                String product = categoryProductCount._1.split("_")[1];
+                                Integer count = categoryProductCount._2;
+                                return RowFactory.create(category, product, count);
+                            }
 
-							@Override
-							public Row call(Tuple2<String, Integer> categoryProductCount)
-									throws Exception {
-								String category = categoryProductCount._1.split("_")[0];
-								String product = categoryProductCount._1.split("_")[1];
-								Integer count = categoryProductCount._2;
-								return RowFactory.create(category, product, count);
-							}
+                        });
 
-						});
+                // 然后，执行DataFrame转换
+                List<StructField> structFields = new ArrayList<StructField>();
+                structFields.add(DataTypes.createStructField("category", DataTypes.StringType, true));
+                structFields.add(DataTypes.createStructField("product", DataTypes.StringType, true));
+                structFields.add(DataTypes.createStructField("click_count", DataTypes.IntegerType, true));
+                StructType structType = DataTypes.createStructType(structFields);
 
-				// 然后，执行DataFrame转换
-				List<StructField> structFields = new ArrayList<StructField>();
-				structFields.add(DataTypes.createStructField("category", DataTypes.StringType, true));
-				structFields.add(DataTypes.createStructField("product", DataTypes.StringType, true));
-				structFields.add(DataTypes.createStructField("click_count", DataTypes.IntegerType, true));
-				StructType structType = DataTypes.createStructType(structFields);
+                HiveContext hiveContext = new HiveContext(categoryProductCountsRDD.context());
 
-				HiveContext hiveContext = new HiveContext(categoryProductCountsRDD.context());
+                Dataset<Row> categoryProductCountDF = hiveContext.createDataFrame(categoryProductCountRowRDD, structType);
 
-				Dataset<Row> categoryProductCountDF = hiveContext.createDataFrame(categoryProductCountRowRDD, structType);
+                // 将60秒内的每个种类的每个商品的点击次数的数据，注册为一个临时表
+                categoryProductCountDF.registerTempTable("product_click_log");
 
-				// 将60秒内的每个种类的每个商品的点击次数的数据，注册为一个临时表
-				categoryProductCountDF.registerTempTable("product_click_log");
+                // 执行SQL语句，针对临时表，统计出来每个种类下，点击次数排名前3的热门商品
+                Dataset<Row> top3ProductDF = hiveContext.sql(
+                        "SELECT category,product,click_count "
+                                + "FROM ("
+                                + "SELECT "
+                                + "category,"
+                                + "product,"
+                                + "click_count,"
+                                + "row_number() OVER (PARTITION BY category ORDER BY click_count DESC) rank "
+                                + "FROM product_click_log"
+                                + ") tmp "
+                                + "WHERE rank<=3");
 
-				// 执行SQL语句，针对临时表，统计出来每个种类下，点击次数排名前3的热门商品
-				Dataset<Row> top3ProductDF = hiveContext.sql(
-						"SELECT category,product,click_count "
-								+ "FROM ("
-								+ "SELECT "
-								+ "category,"
-								+ "product,"
-								+ "click_count,"
-								+ "row_number() OVER (PARTITION BY category ORDER BY click_count DESC) rank "
-								+ "FROM product_click_log"
-								+ ") tmp "
-								+ "WHERE rank<=3");
+                // 这里说明一下，其实在企业场景中，可以不是打印的
+                // 案例说，应该将数据保存到redis缓存、或者是mysql db中
+                // 然后，应该配合一个J2EE系统，进行数据的展示和查询、图形报表
 
-				// 这里说明一下，其实在企业场景中，可以不是打印的
-				// 案例说，应该将数据保存到redis缓存、或者是mysql db中
-				// 然后，应该配合一个J2EE系统，进行数据的展示和查询、图形报表
-				
-				top3ProductDF.show();
-			}
-		});
-		
+                top3ProductDF.show();
+            }
+        });
+
 		jssc.start();
 		jssc.awaitTermination();
 		jssc.close();

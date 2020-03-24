@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext
 /**
  * @author Administrator
  */
-object AccumulatorVariable {
+object AccumulatorVariableScala {
 
   def main(args: Array[String]){
     val conf = new SparkConf()

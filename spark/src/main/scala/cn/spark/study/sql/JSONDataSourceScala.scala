@@ -9,7 +9,7 @@ import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.types.StructField
 
-object JSONDataSource {
+object JSONDataSourceScala {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
