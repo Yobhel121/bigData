@@ -1,4 +1,4 @@
-package com.alonzo.hive.ql;
+package com.alonzo.hive.udaf;
 
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;

@@ -49,9 +49,9 @@ object HivetoKafka {
     }
     val result: Dataset[String] = hc.sql(sql).toJSON
     result.foreachPartition(rdd => {
-      rdd.foreach(record => {
-        kafkaProducer.value.send(topic, record).get()
-      })
+        rdd.foreach(record => {
+          kafkaProducer.value.send(topic, record).get()
+        })
     })
 
     kafkaProducer.value.producer.flush()

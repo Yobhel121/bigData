@@ -1,4 +1,4 @@
-package com.alonzo.hive.ql;
+package com.alonzo.hive.udtf;
 
 import java.util.ArrayList;
 import java.util.HashMap;
