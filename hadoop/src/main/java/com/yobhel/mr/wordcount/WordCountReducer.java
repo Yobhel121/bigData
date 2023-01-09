@@ -1,4 +1,4 @@
-package com.alonzo.mr.wordcount;
+package com.yobhel.mr.wordcount;
 
 import java.io.IOException;
 

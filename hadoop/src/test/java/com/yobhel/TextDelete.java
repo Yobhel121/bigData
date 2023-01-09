@@ -1,11 +1,10 @@
-package com.alonzo;
+package com.yobhel;
 
-import java.io.IOException;
-
+import com.yobhel.util.TestHdfsUtil;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-import com.alonzo.util.TestHdfsUtil;
+import java.io.IOException;
 
 public class TextDelete {
 	public static void main(String[] args) throws IOException {

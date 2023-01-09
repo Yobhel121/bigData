@@ -1,4 +1,4 @@
-package com.alonzo;
+package com.yobhel;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;

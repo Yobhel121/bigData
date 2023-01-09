@@ -1,6 +1,4 @@
-package com.alonzo.mr.index;
-
-import java.io.IOException;
+package com.yobhel.mr.index;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -8,6 +6,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+import java.io.IOException;
 
 public class ReverseIndexRunner {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {

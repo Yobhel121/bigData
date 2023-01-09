@@ -1,4 +1,4 @@
-package com.alonzo.shuffle;
+package com.yobhel.shuffle;
 
 import java.io.DataInput;
 import java.io.DataOutput;

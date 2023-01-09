@@ -1,11 +1,11 @@
-package com.alonzo.mr.index;
+package com.yobhel.mr.index;
+
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Reducer;
 
 public class ReverseIndexReducer extends Reducer<Text, Text, Text, Text> {
 	private Text outputValue = new Text();

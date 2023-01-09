@@ -1,4 +1,4 @@
-package com.alonzo.mr.wordcount;
+package com.yobhel.mr.wordcount;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-import com.alonzo.util.HdfsUtil;
+import com.yobhel.util.HdfsUtil;
 
 public class WordCountRunner implements Tool {
 	private Configuration conf = null;

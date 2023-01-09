@@ -1,4 +1,4 @@
-package com.alonzo;
+package com.yobhel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-import com.alonzo.util.TestHdfsUtil;
+import com.yobhel.util.TestHdfsUtil;
 
 public class TestOpen {
 	public static void main(String[] args) throws IOException {

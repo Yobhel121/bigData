@@ -1,10 +1,10 @@
-package com.alonzo;
+package com.yobhel;
 
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-import com.alonzo.util.TestHdfsUtil;
+import com.yobhel.util.TestHdfsUtil;
 
 public class TestGetFileStatus {
 	public static void main(String[] args) throws Exception{

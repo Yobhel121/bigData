@@ -1,4 +1,4 @@
-package com.alonzo.shuffle;
+package com.yobhel.shuffle;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Partitioner;
