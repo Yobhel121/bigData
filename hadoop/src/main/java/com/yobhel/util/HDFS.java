@@ -30,6 +30,9 @@ public class HDFS {
     private Configuration conf = new Configuration();
     private FileSystem fs = null;
 
+    /**
+     * 对应hadoop安装环境的core—site.xml fs.defaultFS配置
+     */
     public static String default_address = "hdfs://localhost:9000";
     public static String default_username = "yezhimin";
 
